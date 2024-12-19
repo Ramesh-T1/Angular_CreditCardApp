@@ -1,0 +1,156 @@
+<div class="coloumns">
+  <div class="coloumn">
+    <app-card
+      [name]="cardForm.get('name')?.value || ''"
+      [cardNumber]="cardForm.get('cardNumber')?.value || ''"
+      [expirationDate]="cardForm.get('expirationDate')?.value || ''"
+      [securityCode]="cardForm.get('securityCode')?.value || ''"
+    ></app-card>
+  </div>
+  <div class="column">
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+      <div class="container">
+        <!--Enter Name-->
+        <div class="field">
+          <label class="label">Enter Name</label>
+          <div class="control">
+            <input
+              formControlName="name"
+              [ngClass]="{
+                'is-danger':
+                  cardForm.controls.name.dirty &&
+                  cardForm.controls.name.touched &&
+                  cardForm.controls.name.errors
+              }"
+            />
+          </div>
+          <ng-container
+            *ngIf="
+              cardForm.controls.name.dirty &&
+              cardForm.controls.name.touched &&
+              cardForm.controls.name?.errors as err
+            "
+          >
+            <div style="color: red" *ngIf="err['required']">
+              Name should not be empty
+            </div>
+            <div style="color: red" *ngIf="err['minlength']">
+              Minimum length should be 3 characters
+            </div>
+          </ng-container>
+        </div>
+        <!--Card Number-->
+        <div class="field">
+          <label class="label">Enter Card Number</label>
+          <div class="control">
+            <input
+              formControlName="cardNumber"
+              [ngClass]="{
+                'is-danger':
+                  cardForm.controls.cardNumber.dirty &&
+                  cardForm.controls.cardNumber.touched &&
+                  cardForm.controls.cardNumber.errors
+              }"
+              mask="0000 0000 0000 0000"
+            />
+          </div>
+          <ng-container
+            *ngIf="
+              cardForm.controls.cardNumber.dirty &&
+              cardForm.controls.cardNumber.touched &&
+              cardForm.controls.cardNumber?.errors as err
+            "
+          >
+            <div style="color: red" *ngIf="err['required']">
+              Card Number is must!!
+            </div>
+            <div style="color: red" *ngIf="err['minlength']">
+              Please Enter 16 digits
+            </div>
+            <div style="color: red" *ngIf="err['maxlength']">
+              Please Enter only 16 digits
+            </div>
+          </ng-container>
+        </div>
+        <!--Expiration Date-->
+        <div class="field">
+          <label class="label">Enter Expiration Date (MM/YY)</label>
+          <div class="control">
+            <input
+              formControlName="expirationDate"
+              [ngClass]="{
+                'is-danger':
+                  cardForm.controls.expirationDate.dirty &&
+                  cardForm.controls.expirationDate.touched &&
+                  cardForm.controls.expirationDate.errors
+              }"
+              mask="00/00"
+            />
+          </div>
+          <ng-container
+            *ngIf="
+              cardForm.controls.expirationDate.dirty &&
+              cardForm.controls.expirationDate.touched &&
+              cardForm.controls.expirationDate?.errors as err
+            "
+          >
+            <div style="color: red" *ngIf="err['required']">
+              Expiration Date is must!!
+            </div>
+            <div style="color: red" *ngIf="err['maxlength']">
+              Please Enter 12 digits
+            </div>
+          </ng-container>
+        </div>
+        <!--CVV/Security Code-->
+        <div class="field">
+          <label class="label">Enter Security Code</label>
+          <div class="control">
+            <input
+              formControlName="securityCode"
+              [ngClass]="{
+                'is-danger':
+                  cardForm.controls.securityCode.dirty &&
+                  cardForm.controls.securityCode.touched &&
+                  cardForm.controls.securityCode.errors
+              }"
+            />
+          </div>
+          <ng-container
+            *ngIf="
+              cardForm.controls.securityCode.dirty &&
+              cardForm.controls.securityCode.touched &&
+              cardForm.controls.securityCode?.errors as err
+            "
+          >
+            <div style="color: red" *ngIf="err['required']">
+              Security Code Date is must!!
+            </div>
+            <div style="color: red" *ngIf="err['minlength']">
+              Please Enter 3 digits
+            </div>
+            <div style="color: red" *ngIf="err['maxlength']">
+              Only Enter 3 digits
+            </div>
+          </ng-container>
+        </div>
+        <div class="buttons">
+          <button
+            [disabled]="cardForm.invalid"
+            class="button is-primary"
+            type="submit"
+          >
+            Submit
+          </button>
+          <button
+            class="button is-warning"
+            type="button"
+            (click)="onResetClick()"
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
